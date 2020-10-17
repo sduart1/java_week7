@@ -1,8 +1,10 @@
 package app;
 
-import service.ServiceFactory;
-import service.StockService;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import service.DatabaseStockService;
 import util.*;
+import xml.Stock;
 import xml.Stocks;
 
 import javax.xml.bind.JAXBContext;
@@ -74,19 +76,32 @@ public class StocksJAXB {
      * @throws FileNotFoundException
      */
 
-    public static void main(String[] args) throws JAXBException, FileNotFoundException, DatabaseConnectionException {
+    private static SessionFactory factory;
+
+    public static void main(String[] args) throws JAXBException, FileNotFoundException {
 
         // be optimistic init to positive values
         ProgramTerminationStatusEnum exitStatus = ProgramTerminationStatusEnum.NORMAL;
         String programTerminationMessage = "Normal program termination.";
-
 
         JAXBContext context = JAXBContext.newInstance(Stocks.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
         Stocks stocks = (Stocks) unmarshaller.unmarshal(new FileReader("src/main/resources/stock_info.xml"));
         System.out.println(stocks.toString());
 
-        StockService stockService = ServiceFactory.getDatabase(stocks);
+        try {
+            factory = new Configuration().configure().buildSessionFactory();
+        } catch (Throwable ex){
+            System.err.println("Failed to create a session factory object" + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
 
+        Stock stock = new Stock();
+        stock.setSymbol(stock.getSymbol());
+        stock.setPrice(stock.getPrice());
+        stock.setTime(stock.getTime());
+
+        DatabaseStockService databaseStockService = new DatabaseStockService();
+        databaseStockService.addStock(stock);
     }
 }

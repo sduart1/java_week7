@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.*;
             "value"
     })
     @Entity
-    @Table(name = "Stocks")
+    @Table(name = "stocksjaxb", schema = "", catalog = "stocks")
     public class Stock implements XMLDomainObject {
 
         @XmlValue
@@ -44,7 +44,6 @@ import javax.xml.bind.annotation.*;
         protected String price;
         @XmlAttribute(name = "time")
         protected String time;
-
 
          /**
          * Gets the value of the value property.
