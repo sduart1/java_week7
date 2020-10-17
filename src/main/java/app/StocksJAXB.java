@@ -1,6 +1,8 @@
 package app;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AnnotatedClassType;
+import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
 import service.DatabaseStockService;
 import util.*;
@@ -10,6 +12,7 @@ import xml.Stocks;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.crypto.Data;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
@@ -90,18 +93,10 @@ public class StocksJAXB {
         System.out.println(stocks.toString());
 
         try {
-            factory = new Configuration().configure().buildSessionFactory();
+            factory = new AnnotationConfiguration().configure().addAnnotatedClass(Stock.class).buildSessionFactory();
         } catch (Throwable ex){
             System.err.println("Failed to create a session factory object" + ex);
             throw new ExceptionInInitializerError(ex);
         }
-
-        Stock stock = new Stock();
-        stock.setSymbol(stock.getSymbol());
-        stock.setPrice(stock.getPrice());
-        stock.setTime(stock.getTime());
-
-        DatabaseStockService databaseStockService = new DatabaseStockService();
-        databaseStockService.addStock(stock);
     }
 }

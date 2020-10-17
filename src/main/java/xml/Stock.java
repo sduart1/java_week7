@@ -30,14 +30,17 @@ import javax.xml.bind.annotation.*;
      */
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
-            "value"
+            "id",
+            "symbol",
+            "price",
+            "time"
     })
     @Entity
     @Table(name = "stocksjaxb", schema = "", catalog = "stocks")
     public class Stock implements XMLDomainObject {
 
         @XmlValue
-        protected int value;
+        protected int id;
         @XmlAttribute(name = "symbol")
         protected String symbol;
         @XmlAttribute(name = "price")
@@ -55,8 +58,8 @@ import javax.xml.bind.annotation.*;
          */
          @Id
          @Column(name = "ID", nullable = false, insertable = true, updatable = true)
-         public int getValue() {
-            return value;
+         public int getID() {
+            return id;
         }
 
         /**
@@ -67,8 +70,8 @@ import javax.xml.bind.annotation.*;
          *     {@link String }
          *
          */
-        public void setValue(int value) {
-            this.value = value;
+        public void setID(int value) {
+            this.id = id;
         }
 
         /**
@@ -157,7 +160,7 @@ import javax.xml.bind.annotation.*;
 
         Stock stock = (Stock) o;
 
-        if (value != stock.value) return false;
+        if (id != stock.id) return false;
         if (time != null ? !time.equals(stock.time) : stock.time != null)
             return false;
         if (symbol != null ? !symbol.equals(stock.symbol) : stock.symbol != null)
@@ -170,7 +173,7 @@ import javax.xml.bind.annotation.*;
 
     @Override
     public int hashCode() {
-        int result = value;
+        int result = id;
         result = 31 * result + (symbol != null ? symbol.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (time != null ? time.hashCode() : 0);
@@ -180,7 +183,7 @@ import javax.xml.bind.annotation.*;
         @Override
         public String toString() {
             return "Stock{" +
-                    "value= '" + value + '\'' +
+                    "value= '" + id + '\'' +
                     "symbol='" + symbol + '\'' +
                     ", price='" + price + '\'' +
                     ", time='" + time + '\'' +
