@@ -1,9 +1,8 @@
 package app;
 
-import org.hibernate.Session;
-import util.DatabaseConnectionException;
-import util.DatabaseUtils;
-import util.HibernateUtil;
+import service.ServiceFactory;
+import service.StockService;
+import util.*;
 import xml.Stocks;
 
 import javax.xml.bind.JAXBContext;
@@ -11,7 +10,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.sql.Connection;
 
 public class StocksJAXB {
 
@@ -88,17 +86,7 @@ public class StocksJAXB {
         Stocks stocks = (Stocks) unmarshaller.unmarshal(new FileReader("src/main/resources/stock_info.xml"));
         System.out.println(stocks.toString());
 
-        try {
-            Connection connection = DatabaseUtils.getConnection();
-            Session session = DatabaseUtils.getSessionFactory().openSession();
-            session.beginTransaction();
-
-            //Commit the transaction
-            session.getTransaction().commit();
-            HibernateUtil.shutdown();
-            } catch (DatabaseConnectionException  exception) {
-                throw new DatabaseConnectionException (exception.getMessage(), exception);
-            }
+        StockService stockService = ServiceFactory.getDatabase(stocks);
 
     }
 }
