@@ -1,6 +1,9 @@
 package app;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotatedClassType;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
@@ -90,10 +93,7 @@ public class StocksJAXB {
         JAXBContext context = JAXBContext.newInstance(Stocks.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
         Stocks stocks = (Stocks) unmarshaller.unmarshal(new FileReader("src/main/resources/stock_info.xml"));
-        System.out.println(stocks.toString());
 
-        DatabaseStockService databaseStockService = new DatabaseStockService();
-        databaseStockService.addStock(stocks);
 
         try {
             factory = new AnnotationConfiguration().configure().addAnnotatedClass(Stock.class).buildSessionFactory();
@@ -101,5 +101,22 @@ public class StocksJAXB {
             System.err.println("Failed to create a session factory object" + ex);
             throw new ExceptionInInitializerError(ex);
         }
+
+        Session session = null;
+        Transaction transaction = null;
+        for (Stock stock : stocks.getStock()){
+            try {
+                session = DatabaseUtils.getSessionFactory().openSession();
+                transaction = session.beginTransaction();
+                session.saveOrUpdate(stock);
+                transaction.commit();
+            }catch (HibernateException e) {
+                if (transaction != null) transaction.rollback();
+                e.printStackTrace();
+            } finally {
+                session.close();
+            }
+        }
+
     }
 }

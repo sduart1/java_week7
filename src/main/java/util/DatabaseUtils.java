@@ -78,7 +78,7 @@ public class DatabaseUtils {
         Configuration configuration = getConfiguration();
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String databaseUrl = configuration.getProperty("jdbc:mysql://localhost:3306/stocks?useSSL=false");
+            String databaseUrl = configuration.getProperty("jdbc:mysql://localhost:3306/stocks?useSSL=false&serverTimezone=EST");
             String username = configuration.getProperty("monty");
             String password = configuration.getProperty("some_pass");
             connection =   DriverManager.getConnection(DB_URL, USER, PASS);
