@@ -92,6 +92,9 @@ public class StocksJAXB {
         Stocks stocks = (Stocks) unmarshaller.unmarshal(new FileReader("src/main/resources/stock_info.xml"));
         System.out.println(stocks.toString());
 
+        DatabaseStockService databaseStockService = new DatabaseStockService();
+        databaseStockService.addStock(stocks);
+
         try {
             factory = new AnnotationConfiguration().configure().addAnnotatedClass(Stock.class).buildSessionFactory();
         } catch (Throwable ex){

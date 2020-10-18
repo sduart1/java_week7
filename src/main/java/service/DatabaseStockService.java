@@ -10,7 +10,7 @@ import xml.Stocks;
 public class DatabaseStockService {
 
     private static SessionFactory factory;
-    public void addStock(Stock stock) {
+    public void addStock(Stocks stock) {
         Session session = factory.openSession();
         Transaction transaction = null;
 
