@@ -4,9 +4,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import xml.Stock;
 import xml.Stocks;
 
+/**
+ *  Stock service that adds stock data to a list. Stock data
+ *  being retrieved is from XML document passed to main.
+ */
 public class DatabaseStockService {
 
     private static SessionFactory factory;

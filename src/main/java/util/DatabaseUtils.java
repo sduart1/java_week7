@@ -30,7 +30,7 @@ public class DatabaseUtils {
     private static final String USER = "monty";
     private static final String PASS = "some_pass";
 
-    public static final String initializationFile = "./src/main/sql/db_initialization.sql";
+    public static final String initializationFile = "src/main/java/sql/db_initialization.sql";
 
     private static SessionFactory sessionFactory;
     private static Configuration configuration;
@@ -78,7 +78,7 @@ public class DatabaseUtils {
         Configuration configuration = getConfiguration();
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String databaseUrl = configuration.getProperty("jdbc:mysql://localhost:3306/stocks?useSSL=false&serverTimezone=EST");
+            String databaseUrl = configuration.getProperty("jdbc:mysql://localhost:3306/stocks?useSSL=false&serverTimezone=PST");
             String username = configuration.getProperty("monty");
             String password = configuration.getProperty("some_pass");
             connection =   DriverManager.getConnection(DB_URL, USER, PASS);

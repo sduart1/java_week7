@@ -1,7 +1,7 @@
 DROP DATABASE stocks;
 CREATE DATABASE stocks;
 
-/* creates a table to store a list of hobbies and their recommended ages */
+/* creates a table to store a list of stocks */
 DROP TABLE if EXISTS stocks.stocksjaxb CASCADE;
 CREATE TABLE stocks.stocksjaxb(
 	id INT NOT NULL AUTO_INCREMENT,

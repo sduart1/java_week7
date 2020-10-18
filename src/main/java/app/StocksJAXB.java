@@ -4,10 +4,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.AnnotatedClassType;
 import org.hibernate.cfg.AnnotationConfiguration;
-import org.hibernate.cfg.Configuration;
-import service.DatabaseStockService;
 import util.*;
 import xml.Stock;
 import xml.Stocks;
@@ -15,7 +12,6 @@ import xml.Stocks;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.crypto.Data;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
@@ -84,6 +80,14 @@ public class StocksJAXB {
 
     private static SessionFactory factory;
 
+    /**
+     *
+     * @param args
+     * @throws JAXBException
+     * @throws FileNotFoundException
+     *
+     * An app that reads an XML doc and saves it to a Database
+     */
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
 
         // be optimistic init to positive values
